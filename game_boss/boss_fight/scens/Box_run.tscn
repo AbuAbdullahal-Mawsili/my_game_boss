@@ -1,0 +1,39 @@
+[gd_scene load_steps=6 format=3 uid="uid://38j45fe4yh0w"]
+
+[ext_resource type="Script" uid="uid://dd8rk0jqogovy" path="res://codes/box_run.gd" id="1_yuoyk"]
+[ext_resource type="Texture2D" uid="uid://fuo3p1jtien5" path="res://icon.svg" id="2_kohs2"]
+[ext_resource type="Script" uid="uid://cyu42r27vfyfg" path="res://codes/codes.gd" id="4_qsrqi"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_kohs2"]
+size = Vector2(117, 1)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qq0tt"]
+size = Vector2(121, 125)
+
+[node name="Box_run" type="CharacterBody2D" groups=["Box"]]
+position = Vector2(116, 83)
+collision_layer = 3
+collision_mask = 3
+script = ExtResource("1_yuoyk")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_kohs2")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(2.5, 59.5)
+shape = SubResource("RectangleShape2D_kohs2")
+
+[node name="Damge" type="Area2D" parent="."]
+collision_layer = 3
+collision_mask = 3
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Damge"]
+position = Vector2(0.5, -1.5)
+shape = SubResource("RectangleShape2D_qq0tt")
+
+[node name="Health" type="Node" parent="."]
+script = ExtResource("4_qsrqi")
+MAX_HEALTH = 1.0
+metadata/_custom_type_script = "uid://b7dasotjdmxf8"
+
+[connection signal="area_entered" from="Damge" to="Health" method="_on_damge_area_entered"]

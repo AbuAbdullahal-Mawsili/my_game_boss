@@ -1,0 +1,49 @@
+[gd_scene load_steps=7 format=3 uid="uid://blfnbyowxkqe2"]
+
+[ext_resource type="Script" uid="uid://b1hpjw62cbeua" path="res://codes/codes_boss/enemy/state_machne_2.gd" id="1_3hnxk"]
+[ext_resource type="Script" uid="uid://cjkaqm3jg2802" path="res://codes/codes_boss/enemy/enemy_gun.gd" id="1_4rsi7"]
+[ext_resource type="Script" uid="uid://callo0xpaovjc" path="res://codes/codes_boss/enemy/Follow.gd" id="2_eukia"]
+[ext_resource type="Script" uid="uid://c7dbigcljc77r" path="res://codes/codes_boss/enemy/gun.gd" id="3_kqgln"]
+[ext_resource type="Texture2D" uid="uid://fuo3p1jtien5" path="res://icon.svg" id="4_kqgln"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_kqgln"]
+size = Vector2(241, 20)
+
+[node name="enemy_gun" type="CharacterBody2D"]
+collision_layer = 3
+collision_mask = 3
+script = ExtResource("1_4rsi7")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.4, 0.4)
+texture = ExtResource("4_kqgln")
+
+[node name="gun" type="Sprite2D" parent="Sprite2D"]
+position = Vector2(80, 2.5)
+scale = Vector2(0.25, 0.25)
+texture = ExtResource("4_kqgln")
+script = ExtResource("3_kqgln")
+
+[node name="respon_shot" type="Area2D" parent="Sprite2D/gun"]
+position = Vector2(-319.99997, -9.999999)
+scale = Vector2(9.999999, 9.999999)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Sprite2D/gun/respon_shot"]
+light_mask = 3
+visibility_layer = 3
+position = Vector2(77.5, 0)
+shape = SubResource("RectangleShape2D_kqgln")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+
+[node name="State_Machine_2" type="Node2D" parent="." node_paths=PackedStringArray("install_state")]
+script = ExtResource("1_3hnxk")
+install_state = NodePath("Follow")
+metadata/_custom_type_script = "uid://b1hpjw62cbeua"
+
+[node name="Follow" type="Node2D" parent="State_Machine_2" node_paths=PackedStringArray("enemy")]
+script = ExtResource("2_eukia")
+enemy = NodePath("../..")
+metadata/_custom_type_script = "uid://callo0xpaovjc"
+
+[connection signal="body_entered" from="Sprite2D/gun/respon_shot" to="." method="_on_respon_shot_body_entered"]

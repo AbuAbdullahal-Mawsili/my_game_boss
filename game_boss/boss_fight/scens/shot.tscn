@@ -1,0 +1,59 @@
+[gd_scene load_steps=7 format=3 uid="uid://3af3i7ptqfcu"]
+
+[ext_resource type="Script" uid="uid://1hxtyaey08vl" path="res://codes/shot.gd" id="1_q2lse"]
+[ext_resource type="Texture2D" uid="uid://gwt7mxwsova7" path="res://asstas/player_asstas/1756072310158.png" id="2_q2lse"]
+[ext_resource type="PackedScene" uid="uid://rfqvbafl8om5" path="res://scens/hurtbox.tscn" id="3_a2037"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_q2lse"]
+size = Vector2(149.893, 2070.21)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_a2037"]
+size = Vector2(155.878, 2147.82)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_yowey"]
+size = Vector2(240, 250)
+
+[node name="shot" type="CharacterBody2D" groups=["shot"]]
+scale = Vector2(0.1, 0.1)
+collision_layer = 3
+collision_mask = 3
+script = ExtResource("1_q2lse")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_q2lse")
+
+[node name="Area2D" type="Area2D" parent="." groups=["Araayes"]]
+position = Vector2(-1, 0)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(-6.5, -36)
+scale = Vector2(1.51441, -0.114964)
+shape = SubResource("RectangleShape2D_q2lse")
+debug_color = Color(0, 0.6, 0.701961, 0)
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+position = Vector2(-0.999989, -28.5)
+scale = Vector2(17.6, 14.75)
+
+[node name="damge" type="Area2D" parent="." groups=["Araayes"]]
+collision_layer = 3
+collision_mask = 3
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="damge"]
+position = Vector2(-7.99973, -36.5001)
+scale = Vector2(1.514, -0.115)
+shape = SubResource("RectangleShape2D_a2037")
+debug_color = Color(0.73913, 0.428885, 0.504469, 0)
+
+[node name="hurtbox" parent="." groups=["Araayes"] instance=ExtResource("3_a2037")]
+position = Vector2(130.208, -438.777)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="hurtbox"]
+position = Vector2(-140.208, 403.777)
+shape = SubResource("RectangleShape2D_yowey")
+debug_color = Color(0.978414, 0.148365, 1.92523e-07, 0)
+
+[connection signal="area_entered" from="Area2D" to="." method="_on_area_2d_area_entered"]
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]
+[connection signal="body_entered" from="damge" to="." method="_on_damge_body_entered"]

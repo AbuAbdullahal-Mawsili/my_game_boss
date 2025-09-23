@@ -1,0 +1,18 @@
+[gd_scene load_steps=3 format=3 uid="uid://dbc7v0ty2tru"]
+
+[ext_resource type="Script" uid="uid://c3wrq04uvcfei" path="res://codes/gun.gd" id="1_n82l5"]
+[ext_resource type="Texture2D" uid="uid://dul4yx7otak00" path="res://asstas/player_asstas/1756040385155.png" id="2_n82l5"]
+
+[node name="gun" type="CharacterBody2D"]
+script = ExtResource("1_n82l5")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("2_n82l5")
+
+[node name="mullz" type="Marker2D" parent="."]
+position = Vector2(88, -27)
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.5
+one_shot = true

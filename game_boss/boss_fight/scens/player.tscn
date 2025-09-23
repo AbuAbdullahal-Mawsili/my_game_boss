@@ -1,0 +1,72 @@
+[gd_scene load_steps=12 format=3 uid="uid://deo0cvtoumd5d"]
+
+[ext_resource type="Script" uid="uid://tl4ln0ehohue" path="res://codes/player.gd" id="1_0sssh"]
+[ext_resource type="Texture2D" uid="uid://bpn5xcigyjx86" path="res://asstas/player_asstas/1755948488007.png" id="2_wyecu"]
+[ext_resource type="Script" uid="uid://bi1a5naxkkdkb" path="res://codes/state_machine.gd" id="3_3mns6"]
+[ext_resource type="Script" uid="uid://u0qjfu4ovrxp" path="res://codes/Move_State.gd" id="3_vm6cd"]
+[ext_resource type="Script" uid="uid://bytlefhk1sj6v" path="res://codes/Idle.gd" id="4_xefub"]
+[ext_resource type="Script" uid="uid://o1yp3jf0tniy" path="res://codes/Jump.gd" id="5_6akbd"]
+[ext_resource type="Script" uid="uid://bd046eokvcnu2" path="res://addons/phantom_camera/scripts/phantom_camera_host/phantom_camera_host.gd" id="7_3mns6"]
+[ext_resource type="Script" uid="uid://bhexx6mj1xv3q" path="res://addons/phantom_camera/scripts/phantom_camera/phantom_camera_2d.gd" id="8_o58kx"]
+[ext_resource type="Script" uid="uid://8umksf8e80fw" path="res://addons/phantom_camera/scripts/resources/tween_resource.gd" id="9_vad8d"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gs3jq"]
+size = Vector2(140, 145.25)
+
+[sub_resource type="Resource" id="Resource_iuf7j"]
+script = ExtResource("9_vad8d")
+duration = 1.0
+transition = 0
+ease = 2
+
+[node name="Player" type="CharacterBody2D" groups=["Player"]]
+collision_layer = 3
+collision_mask = 3
+script = ExtResource("1_0sssh")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("2_wyecu")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_gs3jq")
+
+[node name="State_Machine" type="Node2D" parent="." node_paths=PackedStringArray("install_state")]
+script = ExtResource("3_3mns6")
+install_state = NodePath("Idle")
+
+[node name="Move" type="Node2D" parent="State_Machine" node_paths=PackedStringArray("player")]
+script = ExtResource("3_vm6cd")
+player = NodePath("../..")
+metadata/_custom_type_script = "uid://u0qjfu4ovrxp"
+
+[node name="Idle" type="Node2D" parent="State_Machine" node_paths=PackedStringArray("player")]
+script = ExtResource("4_xefub")
+player = NodePath("../..")
+metadata/_custom_type_script = "uid://bytlefhk1sj6v"
+
+[node name="Jump" type="Node2D" parent="State_Machine" node_paths=PackedStringArray("player")]
+script = ExtResource("5_6akbd")
+jump_high = 120.0
+jump_time = 0.4
+fall_time = 0.2
+player = NodePath("../..")
+metadata/_custom_type_script = "uid://o1yp3jf0tniy"
+
+[node name="Camera2D" type="Camera2D" parent="."]
+physics_interpolation_mode = 1
+limit_bottom = 600
+
+[node name="PhantomCameraHost" type="Node" parent="Camera2D"]
+process_priority = 300
+process_physics_priority = 300
+script = ExtResource("7_3mns6")
+
+[node name="PhantomCamera2D" type="Node2D" parent="." node_paths=PackedStringArray("follow_targets")]
+top_level = true
+script = ExtResource("8_o58kx")
+follow_mode = 3
+follow_targets = [NodePath("..")]
+tween_resource = SubResource("Resource_iuf7j")
+follow_damping_value = Vector2(0, 0)
+limit_bottom = 600

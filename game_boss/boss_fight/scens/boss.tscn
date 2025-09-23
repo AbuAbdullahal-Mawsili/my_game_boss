@@ -1,0 +1,32 @@
+[gd_scene load_steps=4 format=3 uid="uid://6o7ga2t50h5w"]
+
+[ext_resource type="Script" uid="uid://b15h7xlewsgvf" path="res://codes/codes_boss/enemy/boss.gd" id="1_5vfey"]
+[ext_resource type="Texture2D" uid="uid://fuo3p1jtien5" path="res://icon.svg" id="1_72r50"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5vfey"]
+size = Vector2(121, 119)
+
+[node name="Boss" type="CharacterBody2D" groups=["boss"]]
+script = ExtResource("1_5vfey")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_72r50")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-0.5, -0.5)
+shape = SubResource("RectangleShape2D_5vfey")
+debug_color = Color(0, 0.6, 0.701961, 0)
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 2.5
+autostart = true
+
+[node name="respones" type="Node2D" parent="."]
+
+[node name="respon" type="Marker2D" parent="respones"]
+position = Vector2(1, -98)
+
+[node name="respon2" type="Marker2D" parent="respones"]
+position = Vector2(-2047, -1)
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

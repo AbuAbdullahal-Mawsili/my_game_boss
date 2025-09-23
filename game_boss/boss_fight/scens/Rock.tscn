@@ -1,0 +1,49 @@
+[gd_scene load_steps=6 format=3 uid="uid://cx1g7p186hvvo"]
+
+[ext_resource type="Script" uid="uid://btt408upcy14r" path="res://codes/codes_boss/enemy/rock.gd" id="1_kif0e"]
+[ext_resource type="Script" uid="uid://vbgb23qti5xm" path="res://codes/codes_boss/enemy/state_rock.gd" id="2_5k5tm"]
+[ext_resource type="Texture2D" uid="uid://djpb4ao0cldnx" path="res://asstas/enemy_asstats/1756217099273.png" id="2_yvxyo"]
+[ext_resource type="Script" uid="uid://callo0xpaovjc" path="res://codes/codes_boss/enemy/Follow.gd" id="4_uwvcc"]
+[ext_resource type="Script" uid="uid://cyu42r27vfyfg" path="res://codes/codes.gd" id="5_yvxyo"]
+
+[node name="rock" type="CharacterBody2D" groups=["Rock"]]
+collision_layer = 2
+collision_mask = 2
+script = ExtResource("1_kif0e")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(12, 0)
+rotation = 1.5708
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("2_yvxyo")
+
+[node name="State_rock" type="Node2D" parent="." node_paths=PackedStringArray("install_State")]
+script = ExtResource("2_5k5tm")
+install_State = NodePath("Follow")
+
+[node name="Follow" type="Node2D" parent="State_rock" node_paths=PackedStringArray("enemy")]
+script = ExtResource("4_uwvcc")
+enemy = NodePath("../..")
+metadata/_custom_type_script = "uid://callo0xpaovjc"
+
+[node name="damge" type="Area2D" parent="."]
+position = Vector2(12, 0)
+rotation = 1.5708
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="damge"]
+polygon = PackedVector2Array(-18, -58, -4, -58, -4, -52, 1, -52, 1, -48, 6, -48, 6, -39, 6, -38, 11, -38, 11, 34, 15, 34, 15, 38, 20, 38, 20, 43, 25, 43, 25, 48, 30, 48, 30, 67, -52, 67, -52, 48, -47, 48, -47, 43, -42, 43, -42, 38, -37, 38, -37, 33, -33, 33, -33, -39, -28, -39, -28, -49, -23, -49, -23, -53, -18, -53)
+
+[node name="wild" type="Area2D" parent="."]
+
+[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="wild"]
+position = Vector2(12, 0)
+rotation = 1.5708
+polygon = PackedVector2Array(-18, -58, -4, -58, -4, -52, 1, -52, 1, -48, 6, -48, 6, -39, 6, -38, 11, -38, 11, 34, 15, 34, 15, 38, 20, 38, 20, 43, 25, 43, 25, 48, 30, 48, 30, 67, -52, 67, -52, 48, -47, 48, -47, 43, -42, 43, -42, 38, -37, 38, -37, 33, -33, 33, -33, -39, -28, -39, -28, -49, -23, -49, -23, -53, -18, -53)
+
+[node name="enemy_Health" type="Node" parent="."]
+script = ExtResource("5_yvxyo")
+MAX_HEALTH = 1.0
+metadata/_custom_type_script = "uid://cyu42r27vfyfg"
+
+[connection signal="area_entered" from="damge" to="enemy_Health" method="_on_damge_area_entered"]
+[connection signal="body_entered" from="wild" to="." method="_on_wild_body_entered"]

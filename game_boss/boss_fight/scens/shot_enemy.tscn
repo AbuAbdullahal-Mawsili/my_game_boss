@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://f215u8je8crd"]
+
+[ext_resource type="Script" uid="uid://jto4rcadiax2" path="res://codes/shot_enemy.gd" id="1_ctvu8"]
+[ext_resource type="Texture2D" uid="uid://gwt7mxwsova7" path="res://asstas/player_asstas/1756072310158.png" id="2_hpne0"]
+
+[node name="shot_enemy" type="CharacterBody2D"]
+script = ExtResource("1_ctvu8")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_hpne0")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+
+[node name="gravite" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="gravite"]
